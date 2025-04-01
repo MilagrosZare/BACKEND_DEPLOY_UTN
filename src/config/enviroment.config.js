@@ -9,8 +9,8 @@ const ENVIROMENT = {
     SECRET_KEY_JWT: process.env.SECRET_KEY_JWT,
     GMAIL_USERNAME: process.env.GMAIL_USERNAME,
     GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
-    URL_BACKEND: process.env.URL_BACKEND || 'http://localhost:3000',
-    URL_FRONTEND: process.env.URL_FRONTEND || 'http://localhost:5000',
+    URL_BACKEND: process.env.URL_BACKEND || 'https://deploy-tp-utn.vercel.app',
+    URL_FRONTEND: process.env.URL_FRONTEND || 'https://frontend-deploy-tp.vercel.app',
 }
 
 export default ENVIROMENT
