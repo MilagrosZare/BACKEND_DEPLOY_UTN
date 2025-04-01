@@ -9,12 +9,13 @@ import channelRouter from "./routes/channel.router.js";
 const app = express()
 
 const corsOptions = {
-    origin: ENVIROMENT.URL_FRONTEND,
+    origin: 'https://frontend-deploy-tp.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }
 
-app.use(cors({corsOptions}))
+console.log(ENVIROMENT.URL_FRONTEND)
+app.use(cors(corsOptions))
 
 app.use(express.json())
 
