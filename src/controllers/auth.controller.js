@@ -8,7 +8,7 @@ import { AUTHORIZATION_TOKEN_PROPS } from "../utils/constants/token.constants.js
 
 export const registerController = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, profile_image_base64 } = req.body;
 
 
         if (!username) {
@@ -33,9 +33,7 @@ export const registerController = async (req, res) => {
         )
 
         await UserRepository.create({ username, email, password: passwordHash, verification_token })
-        //Le vamos a enviar un mail a el usuario
-        //El mail va a tener un link
-        //<a href='http://localhost:3000/api/auth/verifyEmail?verification_token=dsadssadosakdsaodsadsadijiodsad$'>Click para verificar</a>
+
         await sendMail({
             to: email,
             subject: 'Valida tu mail!',
@@ -114,7 +112,7 @@ export const loginController = async (req, res) => {
         if(!user_found.verified){
             throw new ServerError('User found has no validated his email', 400)
         }
-        const isSamePassword = await bcrypt.compare(password, user_found.password)
+        const isSamePassword = bcrypt.compare(password, user_found.password)
         if(!isSamePassword){
             throw new ServerError('The password is not correct', 400)
         }
