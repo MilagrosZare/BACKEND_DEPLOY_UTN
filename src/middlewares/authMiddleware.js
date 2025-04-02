@@ -7,29 +7,34 @@ export const authMiddleware = (req, res, next) => {
         if (!authorization_header) {
             throw new ServerError('No authorization header found', 401);
         }
+
         const authorization_token = authorization_header.split(' ')[1]
         if (!authorization_token) {
-            throw new ServerError('No autrhorization token found', 401);
+            throw new ServerError('No authorization token found', 401);
         }
         try {
-            const user_info = jwt.verify(authorization_token, ENVIROEMNT.SECRET_JWT_KEY)
+            const user_info = jwt.verify(authorization_token, ENVIROMENT.SECRET_KEY_JWT)
             req.user = user_info
             next()
         } catch (error) {
-            throw new ServerError('Token invalido o vencido', 401);
+            throw new ServerError('Token invalido o vencido', 400);
         }
-    } catch (error) {
+    }
+    catch (error) {
+        console.log("error al autentificar", error.message);
+
         if (error.status) {
-            return res.send({
+            return response.json({
                 ok: false,
-                message: error.message,
-                status: error.status
-            })
+                status: error.status,
+                message: error.message
+            });
         }
-        return res.send({
+
+        response.json({
+            status: 500,
             ok: false,
-            message: 'Internal server error',
-            status: 500
-        })
+            message: "internal server error"
+        });
     }
 }
